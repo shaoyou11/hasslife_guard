@@ -97,7 +97,10 @@ class HassLifeGuardCoordinator(DataUpdateCoordinator[SourceCheckResult]):
             )
 
         expected_digest = self.entry.options.get(CONF_BASELINE_DIGEST)
-        result = self._check_source(expected_digest)
+        result = await self.hass.async_add_executor_job(
+            self._check_source,
+            expected_digest,
+        )
 
         if result.ok and result.status == STATUS_BASELINE_REQUIRED:
             self._save_baseline(result)
@@ -180,7 +183,7 @@ class HassLifeGuardCoordinator(DataUpdateCoordinator[SourceCheckResult]):
         if not entries:
             raise HomeAssistantError("未找到 HassLife 配置条目")
 
-        result = self._check_source()
+        result = await self.hass.async_add_executor_job(self._check_source)
         if not result.ok or not result.observed_digest:
             result = await self._handle_failure(result, entries)
             self.async_set_updated_data(result)
