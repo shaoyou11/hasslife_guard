@@ -1,0 +1,29 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HassLife Whitelist Guard",
+        "description": "Periodically verify that the local HassLife source still contains the entity allowlist gates.",
+        "data": {
+          "check_interval_hours": "Fallback check interval (hours)",
+          "auto_disable_hasslife": "Disable HassLife automatically when a check fails"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Only one HassLife Whitelist Guard can be configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "HassLife Whitelist Guard settings",
+        "description": "The default check interval is 12 hours. Accept a new baseline only after verifying the source.",
+        "data": {
+          "check_interval_hours": "Fallback check interval (hours)",
+          "auto_disable_hasslife": "Disable HassLife automatically when a check fails"
+        }
+      }
+    }
+  }
+}

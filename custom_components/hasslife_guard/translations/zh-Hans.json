@@ -1,0 +1,29 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "HassLife 白名单守卫",
+        "description": "定期检查本地 HassLife 代码是否仍包含实体白名单拦截；发现更新或保护逻辑缺失时可自动停用 HassLife。",
+        "data": {
+          "check_interval_hours": "兜底检查间隔（小时）",
+          "auto_disable_hasslife": "检查失败时自动停用 HassLife"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "只能添加一个 HassLife 白名单守卫。"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "HassLife 白名单守卫设置",
+        "description": "默认每 12 小时检查一次。只有确认当前代码无误后，才使用“接受当前版本为基线”。",
+        "data": {
+          "check_interval_hours": "兜底检查间隔（小时）",
+          "auto_disable_hasslife": "检查失败时自动停用 HassLife"
+        }
+      }
+    }
+  }
+}

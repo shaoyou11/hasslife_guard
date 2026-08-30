@@ -1,0 +1,8 @@
+[project]
+name = "hasslife-whitelist-guard"
+version = "0.1.0"
+description = "Fail-closed integrity guard for a local Home Assistant HassLife allowlist customization"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
