@@ -1,8 +1,6 @@
 __pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
-.venv/
-dist/
-build/
+*.pyc
+.env
+secrets.yaml
+.storage/
+config.json

@@ -1,38 +1,21 @@
-# HassLife 白名单守卫
+# HassLife 白名单保护
 
-这是一个 Home Assistant 自定义集成，用于保护本地 `hasslife` 定制代码中的实体白名单逻辑。
+检查已有 HassLife 白名单基线，保留现有保护策略。
 
-它不会改 HomeKit 配置，也不会替用户自动放行未知代码。默认每 12 小时检查一次；首次检查保存当前代码的哈希基线，之后发现 HassLife 被 HACS 更新、文件缺失或白名单拦截标记缺失时：
+## 安装与更新
 
-1. 创建持久通知，说明失败原因。
-2. 默认停用 HassLife 配置条目，避免未审核代码继续同步实体。
-3. 保留当前基线，等待人工检查。
+在 HACS / Home Assistant Marketplace 的自定义仓库中添加 `shaoyou11/hasslife_guard`，类型选择 Integration。下载后重启 Home Assistant，在“设备与服务”中添加本集成；已有配置项会继续复用，更新不要求删除实体或重新配对。
 
-## 安装
+当前版本：`0.1.1`。发布版本使用 GitHub Releases，更新前请创建 Home Assistant 备份；若行为异常，可通过 Marketplace 重新下载上一个版本并重启回滚。
 
-在 HACS 中选择“自定义存储库”，添加 `shaoyou11/hasslife_guard`，类型选择 `Integration`，下载安装后重启 Home Assistant。
+## 使用边界
 
-然后在“设置 -> 设备与服务 -> 添加集成”中搜索 `HassLife Whitelist Guard` 并添加。
+这是自建辅助集成，需要已配置的原生或上游集成。不会替代原设备集成，配置项、历史记录和配对不包含在此仓库。图标为本地生成的辅助集成图标，不表示获得硬件厂商认证。
 
-这里使用的是 HACS 自定义存储库，不代表已经进入 HACS 官方默认目录。
+具体依赖以 `custom_components/hasslife_guard/manifest.json` 为准。已有部署可能具有特定设备约束；安装前检查配置流程和兼容性保护。不要同时安装重复的辅助补丁。
 
-## 设置
+## 验证与维护
 
-- 兜底检查间隔默认 12 小时，可在集成选项中修改，范围为 1 到 168 小时。
-- `白名单保护`：开启表示当前 HassLife 源代码通过检查。
-- `立即检查白名单`：重新检查，但不会接受代码变化。
-- `接受当前版本为基线`：只在检查通过并确认代码无误后使用；它不会自动启用已停用的 HassLife。
-- `检查失败时自动停用 HassLife`：默认开启，可在选项中关闭。
+每个集成独立仓库和版本，Python 文件编译检查后发布；升级不会自动同时更新其他集成。问题请提交到本仓库 Issues，日志和诊断请先移除账号、令牌、地址与位置信息。
 
-## 与现有 HassLife 的关系
-
-守卫只检查和停用 `hasslife` 配置条目，不会修改其实体白名单选项，也不会修改 HomeKit Bridge。停用守卫本身不会停用 HomeKit；停用 HassLife 也不会移除 HomeKit 实体。
-
-本项目只负责发现更新并 fail-closed，不会自动把 HACS 更新回滚或自动修改上游 HassLife 源码。每次更新后应先检查本地白名单补丁，再接受新的基线。
-
-## 开发校验
-
-```text
-python -m unittest discover -s tests -v
-python -m compileall -q custom_components tests
-```
+首次建立发布基线仅补充品牌资源、文档、更新元数据及持续检查，保留运行逻辑。自建辅助代码尚未宣称达到 Home Assistant 官方质量等级。
